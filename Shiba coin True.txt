@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShibaCoin Presale</title>
+<style>
+body { background:#111; color:#ffeb3b; font-family:Arial,sans-serif; margin:0;
+padding:20px; text-align:center; }
+h1,h2{margin:10px 0; color:#ffeb3b;}
+h1{font-size:2.8rem;} h2{font-size:2rem;}
+.description{font-size:1.2rem; max-width:720px; margin:10px auto; line-height:
+1.6;}
+.progress-bar-container { width:90%; background:#222; border-radius:14px;
+margin:20px auto; height:30px; box-shadow: inset 0 0 6px #000; }
+.progress-bar { background-color:#ffeb3b; height:100%; width:0%; border-radius:
+14px; transition:0.5s ease-in-out; box-shadow:0 0 6px #ffeb3b; }
+.connect-wallet, .buy-section { margin:25px 0; display:flex; flex-direction:column;
+align-items:center; gap:12px; }
+button { background:#ffeb3b; color:#111; border:none; padding:14px 36px;
+font-weight:bold; border-radius:10px; cursor:pointer; font-size:1.2rem; transition:
+0.3s; }
+button:hover { background:#e6d300; transform:scale(1.05);}
+input, select { padding:12px; font-size:1.1rem; border-radius:8px; border:1px solid
+#444; background:#111; color:#ffeb3b; transition:0.3s; text-align:center;}
+input:focus, select:focus { border-color:#ffeb3b; outline:none; box-shadow:0 0 6px
+#ffeb3b;}
+.contract-address { font-family:monospace; background:#222; color:#ffeb3b;
+padding:14px 18px; border-radius:8px; cursor:pointer; width:fit-content; margin:
+20px auto; font-size:1.1rem; word-break:break-all; transition:0.3s;}
+.contract-address:hover { background:#333; color:#fff200;}
+#countdown{font-size:36px; font-weight:bold; margin:25px 0; color:#ffeb3b;}
+.token-card{background:#111; color:#ffeb3b; margin:12px; padding:18px;
+border-radius:12px; width:180px; border:2px solid #ffeb3b; box-shadow:0 0 10px
+#000; transition:0.3s;}
+.token-card:hover{transform:scale(1.05); box-shadow:0 0 18px #ffeb3b;}
+#socials a{transition:0.3s; font-size:1.3rem; font-weight:bold;
+text-decoration:none; margin:0 15px;}
+#socials a:hover{transform:scale(1.1);}
+.exchanges img{width:70px; filter:brightness(0) invert(1); transition:0.3s;}
+.exchanges img:hover{transform:scale(1.1);}
+#contractDisplay, #walletBalance{margin-top:10px; font-weight:bold;color:#ffeb3b;}
+@media (max-width:600px){
+h1{font-size:2rem;}
+h2{font-size:1.6rem;}
+input, select{width:140px;}
+button{padding:12px 28px;font-size:1rem;}
+#countdown{font-size:28px;}
+.token-card{width:140px; padding:12px;}
+.exchanges img{width:55px;}
+}
+</style>
+</head>
+<body>
+<h1>Ѧ ShibaCoin Presale Ѧ</h1>
+<div style="display:flex; justify-content:center; gap:20px; margin:20px 0;
+flex-wrap:wrap;">
+<div class="token-card"><h4>Presale Price</h4><p id="presalePrice">0.0009
+USD</p></div>
+<div class="token-card"><h4>Listing Price</h4><p>1.50 USD</p></div>
+</div>
+<p class="description">
+ShibaCoin is a promising and transparent crypto project! Ѧ<br>
+Join the presale now and be among the first to benefit from this high-potential
+token.<br>
+All transactions are secure, and our smart contract is verified. ̎
+</p>
+<div id="fundRaised">600,000 USD Raised</div>
+<div class="progress-bar-container"><div class="progress-bar" id="progressBar"></
+div></div>
+<div class="connect-wallet">
+<button onclick="openWalletOptions()">Connect Wallet</button>
+</div>
+<div class="buy-section">
+<input type="number" id="buyAmount" placeholder="Amount" value="100"
+oninput="updateLivePrice()" />
+<select id="currency" onchange="updateLivePrice()">
+<option value="USDT_TRC20">USDT TRC20</option>
+<option value="BNB">BNB</option>
+<option value="ETH">ETH</option>
+<option value="SOL">SOL</option>
+</select>
+<p id="livePrice" style="margin-top:10px; font-weight:bold;">Total Cost: 0 USD</
+p>
+<button onclick="buyTokens()">Buy Token</button>
+</div>
+<div id="countdown"></div>
+<div class="contract-address" onclick="copyContractAddres
+s()">0x84093967b0120D5Df3bBD65474Ff851Bdd5318Be</
+div>
+<div id="contractDisplay"></div>
+<div id="walletBalance"></div>
+<!-- Listing Exchanges -->
+<section id="exchanges">
+<h2>̱ Available On</h2>
+<div class="exchanges" style="display:flex; justify-content:center; flex-wrap:wrap;
+gap:20px; margin-top:15px;">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..."
+alt="Binance" title="Binance">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..."
+alt="MEXC" title="MEXC">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..."
+alt="LBank" title="LBank">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..."
+alt="Gate.io" title="Gate.io">
+</div>
+</section>
+<!-- Tokenomics -->
+<section id="tokenomics">
+<h2>
+͊ Tokenomics</h2>
+<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;
+margin-top:20px;">
+<div class="token-card"><img src="data:image/
+png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..." alt="Liquidity"
+style="width:55px;"><h4>Liquidity Pool</h4><p>50%<br>1,000,000,000 SHIBA</
+p></div>
+<div class="token-card"><img src="data:image/
+png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..." alt="Marketing"
+style="width:55px;"><h4>Marketing</h4><p>20%<br>400,000,000 SHIBA</p></
+div>
+<div class="token-card"><img src="data:image/
+png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..." alt="Team" style="width:
+55px;"><h4>Team</h4><p>10%<br>200,000,000 SHIBA</p></div>
+<div class="token-card"><img src="data:image/
+png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..." alt="Reserve"
+style="width:55px;"><h4>Reserve</h4><p>10%<br>200,000,000 SHIBA</p></div>
+<div class="token-card"><img src="data:image/
+png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA..." alt="Development"
+style="width:55px;"><h4>Development</h4><p>10%<br>200,000,000 SHIBA</p></
+div>
+</div>
+</section>
+<section id="socials">
+<h2>ƙ Follow Us</h2>
+<div style="display:flex; justify-content:center; margin-top:15px;">
+<a href="https://twitter.com/shibacoin120" target="_blank"
+style="color:#1DA1F2;">ʦ Twitter</a>
+<a href="https://t.me/shibacoin5" target="_blank" style="color:#0088cc;">̬
+Telegram</a>
+</div>
+</section>
+<div id="walletModal" style="display:none;position:fixed;top:
+0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:
+9999;display:flex;align-items:center;justify-content:center;">
+<div>
+<h3>Choose Wallet</h3>
+<button onclick="connectWallet('MetaMask')">MetaMask</button>
+<button onclick="connectWallet('Trust')">Trust Wallet</button>
+<br/>
+<button style="background:#888;padding:10px 20px;"
+onclick="closeWalletOptions()">Cancel</button>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+<script>
+const RECEIVER_WALLET =
+"0x6C0fe22C0683945ADD381E4d4Aa6d70ecbbC2f23";
+const SHIBA_WALLET = "0x90cbC2Fb6b85DF8c2fc0B2e29B258a611dD656";
+const CONTRACT_ADDRESS =
+"0x84093967b0120D5Df3bBD65474Ff851Bdd5318Be";
+let web3, raised=600000, hardCap=1600000;et presalePrice = 0.0009;
+const roundPriceIncrement = 0.00006;
+
+function openWalletOptions()
+{document.getElementById('walletModal').style.display='flex';}
+function closeWalletOptions()
+{document.getElementById('walletModal').style.display='none';}
+function copyContractAddress()
+{navigator.clipboard.writeText(CONTRACT_ADDRESS).then(()=>{alert("Contract
+address copied!");});}
+async function connectWallet(type){
+if(window.ethereum){
+try{await window.ethereum.request({method:'eth_requestAccounts'});
+web3=new Web3(window.ethereum); alert(type+' connected!');}
+catch(e){alert(type+' failed: '+e.message); return;}
+}else{alert('Wallet not available'); return;}
+closeWalletOptions();
+displayContractAndBalance();}
+
+async function displayContractAndBalance(){
+document.getElementById("contractDisplay").textContent = "ShibaCoin Contract:
+"+CONTRACT_ADDRESS;}
+function updateProgress(){
+let p=(raised/hardCap)*100; if(p>100)p=100;
+document.getElementById('progressBar').style.width=p+"%";
+document.getElementById('fundRaised').textContent=raised.toLocaleString()+"
+USD Raised ("+p.toFixed(1)+"%)";}
+
+function updateLivePrice() {
+let amount=parseFloat(document.getElementById("buyAmount").value);
+if(isNaN(amount)||amount<=0)
+{document.getElementById("livePrice").textContent="Total Cost: 0 USD"; return;}
+document.getElementById("livePrice").textContent=`Total Cost: $
+{(amount*presalePrice).toFixed(4)} USD`;}
+async function buyTokens(){
+let amount=parseFloat(document.getElementById("buyAmount").value);
+if(!web3 || isNaN(amount) || amount<50){alert("Connect wallet & min 50!");return;}
+raised += amount*presalePrice;
+if(raised>=hardCap){raised=0; presalePrice+=roundPriceIncrement;
+document.getElementById('presalePrice').textContent=presalePrice.toFixed(5)+"
+USD"; alert(`ȑ Presale reached ${hardCap} USD! New price: $
+{presalePrice.toFixed(5)} USD`);}
+updateProgress(); updateLivePrice();
+alert(`You bought ${amount} ShibaCoin!`);}
+
+function updateCountdown(){
+const now=new Date();
+const base=new Date(Date.UTC(2025,0,1,0,0,0));
+const period=15*24*60*60*1000;
+const nextReset=new Date(base.getTime() + (Math.floor((now-base)/period)
++1)*period);
+const d=String(nextReset.getDate()).padStart(2,'0'),
+m=String(nextReset.getMonth()+1).padStart(2,'0');
+const y=nextReset.getFullYear(), h=String(nextReset.getHours()).padStart(2,'0');
+const min=String(nextReset.getMinutes()).padStart(2,'0'),
+s=String(nextReset.getSeconds()).padStart(2,'0');
+document.getElementById("countdown").textContent=`${d}/${m}/${y} ${h}:$
+{min}:${s}`;}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+updateProgress();
+updateLivePrice();
+</script>
+</body>
+</html>
+
+
+
+
+
